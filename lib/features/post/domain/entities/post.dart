@@ -6,7 +6,7 @@ class Post {
   final String userId;
   final String caption;
   final String imageUrl;
-  final Timestamp timestamp;
+  final DateTime timestamp;
   final List<String> likes;
   final List<Comment> comments;
 
@@ -26,7 +26,7 @@ class Post {
       'userId': userId,
       'caption': caption,
       'imageUrl': imageUrl,
-      'timestamp': timestamp,
+      'timestamp': Timestamp.fromDate(timestamp),
       'likes': likes,
       'comments': comments.map((comment) => comment.toJson()).toList(),
     };
@@ -43,8 +43,8 @@ class Post {
       userId: json['userId'],
       caption: json['caption'],
       imageUrl: json['imageUrl'],
-      timestamp: json['timestamp'],
-      likes: List<String>.from(json['likes'] ?? []),
+      timestamp: (json['timestamp'] as Timestamp).toDate(),
+      likes: List<String>.from(json['likes']),
       comments: comments,
     );
   }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:social/core/presentation/components/white_button.dart';
+import 'package:social/features/chat/presentation/cubits/chatroom_cubit.dart';
+import 'package:social/features/chat/presentation/cubits/chatroom_state.dart';
+import 'package:social/features/chat/presentation/pages/chatroom_page.dart';
 import 'package:social/features/post/presentation/cubits/post_cubit.dart';
 import 'package:social/features/post/presentation/cubits/post_state.dart';
 import 'package:social/features/post/presentation/cubits/profile_post_cubit.dart';
@@ -58,6 +61,37 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       });
     });
+  }
+
+  void openChatRoom() {
+    final state = context.read<ChatroomCubit>().state;
+
+    if (state is ChatroomLoaded) {
+      final chatRooms = state.chatRooms;
+      final ids = [currUser.id, widget.id];
+      ids.sort();
+      final chatRoomId = ids.join('_');
+
+      bool chatRoomExist =
+          chatRooms.where((chatRoom) => chatRoom.id == chatRoomId).isNotEmpty;
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ChatroomPage(
+            targetUserId: widget.id,
+            chatRoomId: chatRoomId,
+            chatRoomExist: chatRoomExist,
+          ),
+        ),
+      );
+    }
+
+    if (state is ChatroomError) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(state.message)));
+      print(state.message);
+    }
   }
 
   void init() {
@@ -240,7 +274,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Expanded(
                                   child: WhiteButton(
                                     text: 'Message',
-                                    onTap: () {},
+                                    onTap: openChatRoom,
                                     width: double.infinity,
                                     height: 30,
                                   ),

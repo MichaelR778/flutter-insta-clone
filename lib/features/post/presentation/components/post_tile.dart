@@ -260,7 +260,7 @@ class _PostTileState extends State<PostTile> {
 
               // time stamp
               Text(
-                DateFormat('yyyy-MM-dd').format(widget.post.timestamp.toDate()),
+                DateFormat('yyyy-MM-dd').format(widget.post.timestamp),
                 style: TextStyle(
                   fontSize: 10,
                   color: Colors.grey.shade400,

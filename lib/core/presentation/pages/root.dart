@@ -32,15 +32,16 @@ class _RootState extends State<Root> {
           }
         },
         child: [
-          HomePage(),
+          const HomePage(),
           // Scaffold(body: Center(child: Text('Explore'))),
-          PullRefreshPage(),
-          Placeholder(),
-          Scaffold(body: Center(child: Text('Reels'))),
+          const PullRefreshPage(),
+          const Placeholder(),
+          const Scaffold(body: Center(child: Text('Reels'))),
           ProfilePage(id: currUser.id),
         ][pageIndex],
       ),
       bottomNavigationBar: NavigationBar(
+        height: 55,
         indicatorColor: Colors.transparent,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: const [
@@ -76,7 +77,7 @@ class _RootState extends State<Root> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CreatePostPage(),
+                builder: (context) => const CreatePostPage(),
               ),
             );
             return;

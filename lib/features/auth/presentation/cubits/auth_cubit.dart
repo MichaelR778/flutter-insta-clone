@@ -8,7 +8,9 @@ class AuthCubit extends Cubit<AuthState> {
   AuthUser? _currUser;
   AuthUser? get currUser => _currUser;
 
-  AuthCubit({required this.authRepo}) : super(AuthLoading());
+  AuthCubit({required this.authRepo}) : super(AuthLoading()) {
+    checkAuth();
+  }
 
   Future<void> checkAuth() async {
     final currUser = await authRepo.getCurrUser();

@@ -4,8 +4,8 @@ import 'package:social/features/auth/domain/entities/auth_user.dart';
 import 'package:social/features/auth/domain/repos/auth_repo.dart';
 
 class FirebaseAuthRepo implements AuthRepo {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Future<AuthUser> signup(String name, String email, String password) async {

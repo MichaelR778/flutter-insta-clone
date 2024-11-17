@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social/features/auth/presentation/cubits/auth_cubit.dart';
@@ -30,7 +29,7 @@ class _CommentSectionState extends State<CommentSection> {
       postId: widget.post.id,
       userId: currUser.id,
       text: commentController.text,
-      timestamp: Timestamp.fromDate(DateTime.now()),
+      timestamp: DateTime.now(),
     );
 
     // add comment locally
@@ -93,9 +92,7 @@ class _CommentSectionState extends State<CommentSection> {
             ),
             const SizedBox(width: 8),
             IconButton.filled(
-              onPressed: () {
-                addComment();
-              },
+              onPressed: addComment,
               icon: const Icon(Icons.arrow_upward),
             ),
           ],

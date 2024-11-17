@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social/features/post/domain/entities/comment.dart';
 import 'package:social/features/post/domain/entities/post.dart';
@@ -35,7 +34,7 @@ class PostCubit extends Cubit<PostState> {
         userId: userId,
         caption: caption,
         imageUrl: imageUrl,
-        timestamp: Timestamp.fromDate(DateTime.now()),
+        timestamp: DateTime.now(),
         likes: [],
         comments: [],
       );

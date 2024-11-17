@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social/features/post/presentation/components/post_tile.dart';
 import 'package:social/features/post/presentation/cubits/post_cubit.dart';
 import 'package:social/features/post/presentation/cubits/post_state.dart';
+import 'package:social/features/chat/presentation/pages/chatroom_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +36,12 @@ class _HomePageState extends State<HomePage> {
         centerTitle: false,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ChatroomListPage(),
+              ),
+            ),
             icon: const ImageIcon(
               AssetImage('icons/Messenger.png'),
             ),

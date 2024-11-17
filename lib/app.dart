@@ -6,6 +6,9 @@ import 'package:social/features/auth/presentation/cubits/auth_cubit.dart';
 import 'package:social/features/auth/presentation/cubits/auth_state.dart';
 import 'package:social/features/auth/presentation/pages/auth_page.dart';
 import 'package:social/core/presentation/pages/root.dart';
+import 'package:social/features/chat/data/firebase_chat_repo.dart';
+import 'package:social/features/chat/presentation/cubits/chatmessage_cubit.dart';
+import 'package:social/features/chat/presentation/cubits/chatroom_cubit.dart';
 import 'package:social/features/post/data/firebase_post_repo.dart';
 import 'package:social/features/post/presentation/cubits/post_cubit.dart';
 import 'package:social/features/post/presentation/cubits/profile_post_cubit.dart';
@@ -24,13 +27,14 @@ class App extends StatelessWidget {
     final profileRepo = FirebaseProfileRepo();
     final storageRepo = SupabaseStorageRepo();
     final postRepo = FirebasePostRepo();
+    final chatRepo = FirebaseChatRepo();
 
     // bloc provider
     return MultiBlocProvider(
       providers: [
         // auth cubit
         BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
+          create: (context) => AuthCubit(authRepo: authRepo),
         ),
 
         // profile cubit
@@ -55,6 +59,22 @@ class App extends StatelessWidget {
             postRepo: postRepo,
           ),
         ),
+
+        // chatroom cubit
+        BlocProvider<ChatroomCubit>(
+          create: (context) => ChatroomCubit(
+            chatRepo: chatRepo,
+            authRepo: authRepo,
+          ),
+        ),
+
+        // chatmessage cubit
+        BlocProvider<ChatmessageCubit>(
+          create: (context) => ChatmessageCubit(
+            chatRepo: chatRepo,
+            authRepo: authRepo,
+          ),
+        ),
       ],
       child: MaterialApp(
         // device preview
@@ -70,6 +90,7 @@ class App extends StatelessWidget {
         home: BlocConsumer<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is Authenticated) {
+              context.read<ChatroomCubit>().loadChatRooms();
               return const Root();
             } else if (state is Unauthenticated) {
               return const AuthPage();

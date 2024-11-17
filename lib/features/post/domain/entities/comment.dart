@@ -5,7 +5,7 @@ class Comment {
   final String postId;
   final String userId;
   final String text;
-  final Timestamp timestamp;
+  final DateTime timestamp;
 
   Comment(
       {required this.id,
@@ -20,7 +20,7 @@ class Comment {
       'postId': postId,
       'userId': userId,
       'text': text,
-      'timestamp': timestamp,
+      'timestamp': Timestamp.fromDate(timestamp),
     };
   }
 
@@ -30,7 +30,7 @@ class Comment {
       postId: json['postId'],
       userId: json['userId'],
       text: json['text'],
-      timestamp: json['timestamp'],
+      timestamp: (json['timestamp'] as Timestamp).toDate(),
     );
   }
 }
